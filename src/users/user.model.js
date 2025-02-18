@@ -1,60 +1,58 @@
-import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
 
-const UserSchema = Schema(
-    {
-        name: {
-            type: String,
-            required: [true, "Name is required"],
-            maxLength: [25, "Cant be overcome 25 characters"]
-        },
-        surname: {
-            type: String,
-            required: [true, "Surname is required"],
-            maxLength: [25, "Cant be overcome 25 characters"]
-        },
-        username: {
-            type: String,
-            unique: true
-        },
-        email: {
-            type: String,
-            required: [true, "Email is required"],
-            unique: true
-        },
-        password: {
-            type: String,
-            required: [true, "Password is required"],
-            minLength: 8
-        },
-        profilePicture: {
-            type: String,
-        },
-        phone: {
-            type: String,
-            minLength: 8,
-            maxLength: 8,
-            required: true,
-        },
-        role: {
-            type: String,
-            required: true,
-            enum: ["ADMIN_ROLE", "USER_ROLE"],
-        },
-        estado: {
-            type: Boolean,
-            default: true,
-        },
+const UserSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, "El Nombre Es Obligatorio"]
     },
-    {
-        timestamps: true,
-        versionKey: false
+    surname: {
+        type: String,
+        required: [true, "El Nombre Es Obligatorio"]
+    },
+    username: {
+        type: String,
+        required: [true, "El Nombre Es Obligatorio"]
+    },
+    email:{
+        type: String,
+        required: [true, "El Correo Es Obligatorio"],
+        unique: true
+    },
+    password: {
+        type: String,
+        required: [true, "La Contraseña Es Obligatoria"]
+    },
+    profile_picture:{
+        type: String,
+    },
+    img:{
+        type: String,
+    },
+    phone: {
+        type: String,
+        minlength:8,
+        maxlength:8,
+        required: [true,"El Numero Es Obligatorio"]
+    },
+    role: {
+        type: String,
+        required: [true, "El Rol Es Obligatorio"],
+        enum: ["ADMIN_ROLE","USER_ROLE"]
+    },
+    estado: {
+        type: Boolean,
+        default: true
+    },
+    google: {
+        type: Boolean,
+        default: false
     }
-);
+});
 
-UserSchema.methods.toJSON = function () {
-    const { __v, password, _id, ...usuario } = this.toObject();
+UserSchema.methods.toJSON = function() {
+    const {__v,password, _id, ...usuario} = this.toObject();
     usuario.uid = _id;
     return usuario;
 }
 
-export default model('User', UserSchema);
+export default mongoose.model("User", UserSchema);

@@ -1,35 +1,37 @@
-import { Schema, model} from "mongoose"
+import { Schema, model } from "mongoose";
 
-const PetSchema = Schema({
+const PetSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true, 
     },
     description: {
         type: String,
-        required: true
+        required: true, 
     },
     age: {
         type: Number,
-        required: true
+        required: true,
+        min: 0          
     },
     type: {
         type: String,
-        uppercase: true,
-        required: true
+        required: true, 
+        uppercase: true,  
+        enum: ['PERRO', 'GATO', 'OTRO'],  
     },
     keeper: {
         type: Schema.Types.ObjectId,
-        ref: 'user',
-        required: true
+        ref: "User",     
+        required: true,  
     },
     status: {
         type: Boolean,
-        default: true
+        default: true, 
     }
 }, {
-    timestamps: true,
-    versionKey: false
+    timestamps: true,  
+    versionKey: false   
 });
 
-export default model('Pet', PetSchema);//posible P mayuscula
+export default model("Pet", PetSchema);

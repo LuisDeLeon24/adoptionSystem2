@@ -1,10 +1,8 @@
-import { Router } from "express"
-import { check } from "express-validator"
-import { getPets, savePet, searchPet, deletePet, updatePet } from "./pet.controller.js"
-import { validarCampos} from "../middlewares/validar-campos.js"
-import { validarJWT } from "../middlewares/validar-jwt.js"
-import { uploadPetPicture } from "../middlewares/multer-upload.js"
-import { existePetById } from "../helpers/db-validator.js";
+import { Router } from "express";
+import { check } from "express-validator";
+import {savePet, getPets, searchPet, deletePet, updatePet} from "./pet.controller.js";
+import {validarCampos} from "../middlewares/validar-campos.js";
+import {validarJWT} from "../middlewares/validar-jwt.js";
 
 const router = Router();
 
@@ -12,19 +10,19 @@ router.post(
     "/",
     [
         validarJWT,
-        check('email', 'Este no es un correo valido').not().isEmpty(),
+        check("email", "Este No Es Un Correo Valido").not().isEmpty(),
         validarCampos
     ],
     savePet
 )
-router.get('/', getPets)
 
+router.get("/", getPets)
 
 router.get(
     "/:id",
     [
         validarJWT,
-        check("id", "No es un Id valido").isMongoId(),
+        check("id", "No Es Un ID Valido").isMongoId(),
         validarCampos
     ],
     searchPet
@@ -32,10 +30,8 @@ router.get(
 
 router.put(
     "/:id",
-    uploadPetPicture.single('petPicture'),
     [
-        check("id", "ID is not valid").isMongoId(),
-        check("id").custom(existePetById),
+        validarJWT,
         validarCampos
     ],
     updatePet
@@ -43,10 +39,10 @@ router.put(
 
 
 router.delete(
-    '/:id',
+    "/:id",
     [
         validarJWT,
-        check("id", "no es un Id validio").isMongoId(),
+        check("id", "No Es Un ID Valido").isMongoId(),
         validarCampos
     ],
     deletePet

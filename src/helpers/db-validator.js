@@ -1,37 +1,26 @@
 import Role from '../role/role.model.js';
-import User from '../users/user.model.js';
-import Pet from '../pet/pet.model.js';
+import Usuario from '../users/user.model.js';
 
-export const esRoleValido = async (role = '') => {
-
-    const existeRol = await Role.findOne({ role });
+export const esRoleValido = async (role = "") => {
+    const existeRol = await Role.findOne({role});
 
     if(!existeRol){
-        throw new Error(`El rol ${ role } no existe en la base de datos`);
+        throw new Error(`El Rol ${role} No Existe Dentro De La Data Base`);
     }
 }
 
-export const existenteEmail = async (correo = ' ') => {
-
-    const existeEmail = await User.findOne({ correo });
+export const existenteEmail = async (correo = '') => {
+    const existeEmail = await Usuario.findOne({correo});
 
     if(existeEmail){
-        throw new Error(`El correo ${ correo } ya existe en la base de datos`);
+        throw new Error(`El Correo ${correo} Ya Existe En La Data Base`);
     }
 }
 
-export const existeUsuarioById = async (id = '') => {
-    const existeUsuario = await User.findById(id);
-
+export const existeUsuarioById = async (id = "") => {
+    const existeUsuario = await Usuario.findById(id);
+    console.log("Id")
     if(!existeUsuario){
-        throw new Error(`El ID ${id} no existe`);
-    }
-}
-
-export const existePetById = async (id = '') =>{
-    const existePet = await Pet.findById(id);
-
-    if(!existePet) {
-        throw new Error(`The pet with ID ${id} is not exists in the database`);
+        throw new Error(`El Id ${id} no existe`);
     }
 }
